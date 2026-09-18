@@ -62,7 +62,7 @@ When migrating to **Stellar Mainnet**, the core logic remains identical. The onl
    npm run dev
    ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser. *(⚠️ **Important**: You must use this exact localhost URL because it is strictly whitelisted for our Pollar SDK API keys. Other ports or IPs will be rejected by Pollar.)*
 
 ## 🗺️ Project Navigation
 
