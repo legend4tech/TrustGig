@@ -251,9 +251,9 @@ export default function Home() {
               </div>
               
               <ul className="space-y-6 font-sans text-lg text-white font-medium relative z-10">
-                <li className="flex items-start gap-4"><span className="text-brand-amber font-black text-xl mt-1">✓</span> <div><strong className="text-brand-amber">No Middlemen.</strong> A new, independent smart contract is deployed on Stellar for <em>every single gig</em>.</div></li>
-                <li className="flex items-start gap-4"><span className="text-brand-amber font-black text-xl mt-1">✓</span> <div><strong className="text-brand-amber">Code is Law.</strong> We literally cannot touch your money. The contract mathematically guarantees the payout.</div></li>
-                <li className="flex items-start gap-4"><span className="text-brand-amber font-black text-xl mt-1">✓</span> <div><strong className="text-brand-amber">100% Verifiable.</strong> Every escrow is verifiable on Stellar Explorer. Don't trust us, trust the math.</div></li>
+                <li className="flex items-start gap-4"><span className="text-brand-amber font-black text-xl mt-1">✓</span> <div><strong className="text-brand-amber">Tokenized Gigs.</strong> The gig parameters, state, and funds are all saved directly on the Stellar blockchain. Not a Web2 database.</div></li>
+                <li className="flex items-start gap-4"><span className="text-brand-amber font-black text-xl mt-1">✓</span> <div><strong className="text-brand-amber">Code is Law.</strong> We literally cannot touch your money. The independent smart contract mathematically guarantees the payout.</div></li>
+                <li className="flex items-start gap-4"><span className="text-brand-amber font-black text-xl mt-1">✓</span> <div><strong className="text-brand-amber">100% Verifiable.</strong> Every single gig contract and its escrowed funds are completely transparent and verifiable on Stellar Explorer.</div></li>
                 <li className="flex items-start gap-4"><span className="text-brand-amber font-black text-xl mt-1">✓</span> <div><strong className="text-brand-amber">Instant Payouts.</strong> Contract executes in &lt;5s upon approval. Direct to your Pollar wallet.</div></li>
               </ul>
             </div>
