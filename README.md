@@ -24,6 +24,7 @@ When migrating to **Stellar Mainnet**, the core logic remains identical. The onl
 - Pointing the Trustless Work SDK to the production API endpoint.
 - Updating the `trustline` token address to the official Stellar USDC issuer.
 - Users will need real XLM (for gas) and real USDC in their Freighter wallets.
+- **Fiat On/Off-Ramping**: Utilizing Pollar and partners (like Stripe or local banking rails) to seamlessly convert fiat to USDC for client gig funding, and allowing freelancers to off-ramp earned USDC directly into their local bank accounts.
 - Transactions will reflect real-world financial value with instant, low-fee settlements.
 
 ## 💻 How to Run Locally
