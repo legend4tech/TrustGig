@@ -35,7 +35,7 @@ To make reviewing easy, we have provided temporary testing keys in the `.env.exa
 
 ### Prerequisites
 - Node.js 18+
-- Freighter Wallet browser extension (Set to Stellar Testnet)
+- No wallet extension needed! Pollar handles embedded wallets natively.
 
 ### Installation
 1. Clone the repository:
