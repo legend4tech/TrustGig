@@ -29,9 +29,12 @@ When migrating to **Stellar Mainnet**, the core logic remains identical. The onl
 
 ## 💻 How to Run Locally
 
+### 🚀 Quick Start for Judges
+
+To make reviewing easy, we have provided temporary testing keys in the `.env.example` file. 
+
 ### Prerequisites
 - Node.js 18+
-- MongoDB instance (Local or Atlas)
 - Freighter Wallet browser extension (Set to Stellar Testnet)
 
 ### Installation
@@ -41,20 +44,15 @@ When migrating to **Stellar Mainnet**, the core logic remains identical. The onl
    cd trust-gig
    ```
 
-2. Install dependencies:
+2. Set up environment variables:
    ```bash
-   npm install
+   # Copy the provided testing keys
+   cp .env.example .env
    ```
 
-3. Configure Environment Variables:
-   Create a `.env.local` file in the root directory and add the following keys:
-   ```env
-   MONGODB_URI=mongodb+srv://<your-db-connection-string>
-   NEXTAUTH_SECRET=<your-nextauth-secret>
-   NEXTAUTH_URL=http://localhost:3000
-   CLOUDINARY_CLOUD_NAME=<your-cloudinary-name>
-   CLOUDINARY_API_KEY=<your-cloudinary-api-key>
-   CLOUDINARY_API_SECRET=<your-cloudinary-secret>
+3. Install dependencies:
+   ```bash
+   npm install
    ```
 
 4. Run the development server:
