@@ -11,6 +11,17 @@ TrustGig is a decentralized, Web3-powered freelance marketplace designed to elim
 5. **Work & Approval**: The freelancer submits their final work. The client reviews the submission and approves it.
 6. **Fund Release**: Approval triggers the smart contract to immediately release the exact budget amount directly to the freelancer's wallet.
 
+## 🥊 Why TrustGig Wins: True Web3 Architecture
+
+While other platforms use standard Web2 databases to track jobs and custodial wallets to hold funds, **TrustGig deploys the gig itself as a native Soroban Smart Contract.**
+
+| The Old Way (Custodial) | The TrustGig Way (Non-Custodial Soroban) |
+| :--- | :--- |
+| **Centralized Ledgers:** Jobs are saved in Web2 SQL databases (like Postgres). | **On-Chain State:** The gig parameters and conditions are stored directly in the smart contract state on the Stellar blockchain. |
+| **Custodial Wallets:** Funds are held by the company. They have the keys. | **Non-Custodial Escrow:** A new, independent smart contract is deployed for *every gig*. The contract holds the USDC. We literally cannot touch it. |
+| **Opaque:** You have to trust their UI. | **100% Verifiable:** Every gig contract and its funds are verifiable on Stellar Explorer. Don't trust us, trust the math. |
+| **Arbitrary Bans:** They can freeze your payout. | **Code is Law:** The contract mathematically guarantees the payout upon approval. |
+
 ## 🌐 Network Information
 
 ### Current State (Testnet)
