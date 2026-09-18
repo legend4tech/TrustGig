@@ -71,7 +71,7 @@ To make reviewing easy, we have provided temporary testing keys in the `.env.exa
 
 ## 🗺️ Project Navigation
 
-The codebase is built on **Next.js 14** using the App Router. Here is a quick guide to finding your way around:
+The codebase is built on **Next.js 16** using the App Router. Here is a quick guide to finding your way around:
 
 - **`src/app/`**: Contains all the page routes.
   - **`/auth`**: Login, Signup, and NextAuth configuration.
@@ -84,7 +84,7 @@ The codebase is built on **Next.js 14** using the App Router. Here is a quick gu
 - **`src/lib/`**: Utility configurations like the MongoDB connection singleton (`mongoose.ts`).
 
 ## 🛡️ Built With
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 16 (App Router)
 - **Styling**: Tailwind CSS & Framer Motion
 - **Database**: MongoDB & Mongoose
 - **Web3 Wallet**: @pollar/react
