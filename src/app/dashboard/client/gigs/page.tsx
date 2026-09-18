@@ -629,7 +629,7 @@ export default function ClientGigsPage() {
                       )}
                       {gig.status === 'pending_approval' && (
                         <button onClick={() => handleFundEscrow(gig)} className="flex items-center justify-center gap-2 px-8 py-4 bg-brand-amber hover:bg-brand-amber/80 text-black text-sm font-extrabold rounded-2xl transition-all shadow-[0_0_20px_rgba(245,165,36,0.3)] hover:shadow-[0_0_25px_rgba(245,165,36,0.5)] w-full xl:w-auto hover:-translate-y-0.5">
-                          Fund Escrow <ChevronRight className="w-4 h-4" />
+                          Approve Applicant & Fund Escrow <ChevronRight className="w-4 h-4" />
                         </button>
                       )}
                       {gig.status === 'in_progress' && (
