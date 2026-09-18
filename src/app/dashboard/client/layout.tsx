@@ -219,17 +219,17 @@ export default function ClientDashboardLayout({ children }: { children: React.Re
           </div>
         </div>
         {/* Top Navbar */}
-        <header className="min-h-20 py-4 md:py-0 md:h-20 border-b border-border bg-background/90 backdrop-blur flex items-center justify-between px-4 md:px-6 shrink-0 z-30 sticky top-0">
-          <div className="flex items-center gap-3 md:gap-4 self-start md:self-center mt-1 md:mt-0">
+        <header className="min-h-16 py-3 md:py-0 md:h-20 border-b border-border bg-background/90 backdrop-blur flex flex-wrap items-center justify-between px-4 md:px-6 gap-2 shrink-0 z-30 sticky top-0">
+          <div className="flex items-center gap-2 shrink-0">
             <button className="md:hidden text-text-primary p-2 -ml-2 rounded-lg hover:bg-surface" onClick={() => setIsSidebarOpen(true)}>
               <Menu className="w-6 h-6" />
             </button>
-            <h1 className="text-xl font-black text-text-primary hidden sm:block">Client Dashboard</h1>
+            <h1 className="text-lg font-black text-text-primary hidden md:block">Client Dashboard</h1>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 ml-auto shrink-0">
             {walletAddress ? (
-              <div className="flex flex-wrap justify-end items-center gap-2 md:flex-nowrap md:gap-3 max-w-[280px] sm:max-w-none">
-                <div className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2.5 bg-surface border border-border rounded-xl shadow-sm order-1 shrink-0">
+              <div className="flex flex-wrap justify-end items-center gap-2 max-w-[calc(100vw-80px)] md:max-w-none">
+                <div className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2.5 bg-surface border border-border rounded-xl shadow-sm shrink-0">
                   <Wallet className="w-3 h-3 md:w-4 md:h-4 text-brand-amber shrink-0" /> 
                   <span className="text-[10px] md:text-sm font-mono text-text-primary font-bold">{walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}</span>
                   <button onClick={copyAddress} className="text-text-muted hover:text-text-primary transition-colors ml-1 shrink-0" title="Copy Address">
@@ -237,7 +237,7 @@ export default function ClientDashboardLayout({ children }: { children: React.Re
                   </button>
                 </div>
                 {walletBalance?.step === 'loaded' && (
-                  <div className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2.5 bg-brand-amber/10 border border-brand-amber/20 rounded-xl shadow-[0_0_10px_rgba(245,165,36,0.1)] order-3 md:order-2 shrink-0">
+                  <div className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2.5 bg-brand-amber/10 border border-brand-amber/20 rounded-xl shadow-[0_0_10px_rgba(245,165,36,0.1)] shrink-0">
                     <span className="text-[10px] md:text-sm font-black text-brand-amber">{getDisplayBalance()}</span>
                   </div>
                 )}
@@ -255,7 +255,7 @@ export default function ClientDashboardLayout({ children }: { children: React.Re
                       toast.error((e as Error).message || 'Failed to setup trustline', { id: 'trustline' });
                     }
                   }}
-                  className="flex items-center text-[10px] md:text-xs font-bold text-blue-500 bg-blue-500/10 hover:bg-blue-500/20 px-3 py-1.5 md:px-4 md:py-2.5 rounded-xl transition-colors border border-blue-500/20 order-2 md:order-3 shrink-0"
+                  className="flex items-center text-[10px] md:text-xs font-bold text-blue-500 bg-blue-500/10 hover:bg-blue-500/20 px-3 py-1.5 md:px-4 md:py-2.5 rounded-xl transition-colors border border-blue-500/20 shrink-0"
                 >
                   <PlusCircle className="w-3 h-3 md:w-3.5 md:h-3.5 mr-1.5 shrink-0" />
                   Setup USDC
