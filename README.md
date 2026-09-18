@@ -62,6 +62,13 @@ To make reviewing easy, we have provided temporary testing keys in the `.env.exa
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser. *(⚠️ **Important**: You must use this exact localhost URL because it is strictly whitelisted for our Pollar SDK API keys. Other ports or IPs will be rejected by Pollar.)*
 
+6. **Fund Your Account (USDC Testnet)**:
+   Since we are on Testnet, our fiat on-ramp is currently disabled. To fund your embedded wallet with USDC to test creating and paying for gigs:
+   - Log in to the dashboard.
+   - Click the **"Setup USDC"** button in the header.
+   - This will establish a trustline to the USDC issuer and redirect you to the Circle Testnet Faucet (`https://faucet.circle.com`).
+   - Copy your Stellar wallet address from the dashboard and use the faucet to mint Testnet USDC directly to your wallet!
+
 ## 🗺️ Project Navigation
 
 The codebase is built on **Next.js 14** using the App Router. Here is a quick guide to finding your way around:
