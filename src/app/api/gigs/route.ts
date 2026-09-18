@@ -20,10 +20,12 @@ export async function GET() {
         .sort({ createdAt: -1 })
         .populate('freelancerId', 'name walletAddress');
     } else {
-      // Freelancer sees open gigs or gigs assigned to them
+      // Freelancer sees open gigs, paid/completed gigs (as proof of activity), or gigs assigned to them
       gigs = await Gig.find({
         $or: [
           { status: 'open' },
+          { status: 'paid' },
+          { status: 'completed' },
           { freelancerId: session.user.id }
         ]
       }).sort({ createdAt: -1 }).populate('clientId', 'name');
