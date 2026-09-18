@@ -210,7 +210,9 @@ export default function FreelancerGigsPage() {
         ) : (
           <div className="grid grid-cols-1 gap-6">
             {gigs.map((gig: IGig) => {
-              const isApplied = gig.freelancerId && (typeof gig.freelancerId !== 'string' && gig.freelancerId._id === session.user?.id || gig.freelancerId === session.user?.id);
+              const isAssigned = gig.freelancerId && (typeof gig.freelancerId !== 'string' && gig.freelancerId._id === session.user?.id || gig.freelancerId === session.user?.id);
+              const hasAppliedInArray = gig.applicants?.some((a: any) => typeof a.freelancerId === 'string' ? a.freelancerId === session.user?.id : a.freelancerId?._id === session.user?.id);
+              const isApplied = isAssigned || hasAppliedInArray;
 
               const statusColors: Record<string, string> = {
                 open: 'text-green-500 bg-green-500/10 border-green-500/20',
@@ -340,7 +342,12 @@ export default function FreelancerGigsPage() {
                           <Rocket className="w-4 h-4" /> Apply Now
                         </button>
                       )}
-                      {isApplied && gig.status === 'in_progress' && (
+                      {isApplied && gig.status === 'open' && (
+                        <div className="flex items-center justify-center gap-2 px-8 py-4 bg-brand-amber/10 border border-brand-amber/20 text-brand-amber text-sm font-bold rounded-2xl w-full xl:w-auto">
+                          <CheckCircle className="w-4 h-4" /> Application Submitted
+                        </div>
+                      )}
+                      {isAssigned && gig.status === 'in_progress' && (
                         <button
                           onClick={() => setSubmitModalGigId(gig._id)}
                           className="flex items-center justify-center gap-2 px-8 py-4 bg-brand-amber hover:bg-brand-amber/80 text-black text-sm font-extrabold rounded-2xl transition-all shadow-[0_0_20px_rgba(245,165,36,0.3)] hover:shadow-[0_0_25px_rgba(245,165,36,0.5)] w-full xl:w-auto hover:-translate-y-0.5"
@@ -348,17 +355,22 @@ export default function FreelancerGigsPage() {
                           <CheckCircle className="w-4 h-4" /> Submit Work
                         </button>
                       )}
-                      {isApplied && gig.status === 'pending_approval' && (
+                      {isAssigned && gig.status === 'pending_approval' && (
                         <div className="flex items-center justify-center gap-2 px-8 py-4 bg-brand-amber/10 border border-brand-amber/20 text-brand-amber text-sm font-bold rounded-2xl w-full xl:w-auto">
                           <CheckCircle className="w-4 h-4" /> Waiting Client Approval
                         </div>
                       )}
-                      {isApplied && gig.status === 'review' && (
+                      {isApplied && !isAssigned && gig.status !== 'open' && (
+                         <div className="px-8 py-4 bg-background text-red-400 text-sm font-bold rounded-2xl border border-red-400/20 w-full xl:w-auto text-center">
+                           Not Selected
+                         </div>
+                      )}
+                      {isAssigned && gig.status === 'review' && (
                         <div className="flex items-center justify-center gap-2 px-8 py-4 bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-sm font-bold rounded-2xl w-full xl:w-auto">
                           <Search className="w-4 h-4" /> Under Review
                         </div>
                       )}
-                      {isApplied && (gig.status === 'paid' || gig.status === 'completed') && (
+                      {isAssigned && (gig.status === 'paid' || gig.status === 'completed') && (
                         <div className="flex items-center justify-center gap-2 px-8 py-4 bg-green-500/10 border border-green-500/20 text-green-500 text-sm font-bold rounded-2xl w-full xl:w-auto">
                           <CheckCircle2 className="w-4 h-4" /> Paid
                         </div>

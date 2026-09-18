@@ -211,6 +211,25 @@ export default function ClientGigsPage() {
     }
   };
 
+  const handleApproveApplicant = async (gigId: string, freelancerId: string) => {
+    const toastId = toast.loading('Approving applicant...');
+    try {
+      const res = await fetch(`/api/gigs/${gigId}/approve`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ freelancerId })
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.message || 'Failed to approve applicant');
+      }
+      toast.success('Applicant approved! You can now deploy the escrow.', { id: toastId });
+      queryClient.invalidateQueries({ queryKey: ['clientGigs'] });
+    } catch (err: unknown) {
+      toast.error('Failed to approve', { id: toastId, description: err instanceof Error ? err.message : 'Unknown error' });
+    }
+  };
+
   const handleFundEscrow = async (gig: IGig) => {
     if (!walletAddress || !activeWallet) {
       toast.error('Wallet not connected', { description: 'Please connect your wallet first.' });
@@ -555,14 +574,69 @@ export default function ClientGigsPage() {
                   <div className="flex flex-col xl:flex-row justify-between items-stretch xl:items-end gap-4 mt-2">
                     
                     <div className="flex-1 flex flex-col gap-3">
-                      {freelancer && (
+                      {gig.status === 'open' && gig.applicants && gig.applicants.length > 0 && (
+                        <div className="flex flex-col gap-4 w-full xl:max-w-2xl mb-4">
+                          <h4 className="text-sm font-bold text-text-secondary uppercase tracking-wider">Applicants</h4>
+                          {gig.applicants.map((applicant: any, i: number) => {
+                            const appUser = applicant.freelancerId;
+                            if (!appUser || typeof appUser === 'string') return null;
+                            return (
+                              <div key={i} className="flex flex-col gap-3 p-4 bg-background border border-border rounded-2xl">
+                                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                                  <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 rounded-full bg-brand-amber/10 flex items-center justify-center border border-brand-amber/20 shrink-0">
+                                      <User className="w-5 h-5 text-brand-amber" />
+                                    </div>
+                                    <div className="flex flex-col">
+                                      <span className="text-[10px] font-bold text-text-secondary uppercase tracking-wider">Applicant</span>
+                                      <span className="text-sm font-bold text-text-primary">{appUser.name}</span>
+                                      <span className="text-xs text-text-muted font-mono truncate max-w-[150px] sm:max-w-xs">{appUser.walletAddress}</span>
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    {applicant.freelancerGithub && (
+                                      <a href={applicant.freelancerGithub} target="_blank" rel="noreferrer" className="px-3 py-1.5 bg-surface hover:bg-surface-hover border border-border rounded-xl text-xs font-bold text-text-primary transition-colors whitespace-nowrap flex items-center gap-2">
+                                        <Code className="w-3.5 h-3.5" /> GitHub
+                                      </a>
+                                    )}
+                                    {applicant.freelancerResumeUrl && (
+                                      <a href={applicant.freelancerResumeUrl} target="_blank" rel="noreferrer" className="px-3 py-1.5 bg-surface hover:bg-surface-hover border border-border rounded-xl text-xs font-bold text-brand-amber transition-colors whitespace-nowrap flex items-center gap-2">
+                                        <FileText className="w-3.5 h-3.5" /> Resume
+                                      </a>
+                                    )}
+                                    <button
+                                      onClick={() => handleApproveApplicant(gig._id, appUser._id)}
+                                      className="px-4 py-1.5 bg-brand-amber hover:bg-brand-amber/80 text-black text-xs font-extrabold rounded-xl transition-all shadow-[0_0_15px_rgba(245,165,36,0.3)] hover:-translate-y-0.5 whitespace-nowrap ml-2"
+                                    >
+                                      Select Applicant
+                                    </button>
+                                  </div>
+                                </div>
+                                {applicant.freelancerCoverLetter && (
+                                  <div className="flex items-start gap-3 p-3 bg-brand-amber/5 border border-brand-amber/20 rounded-xl mt-1">
+                                    <FileText className="w-4 h-4 text-brand-amber shrink-0 mt-0.5" />
+                                    <div className="flex flex-col">
+                                      <span className="text-[10px] font-bold text-brand-amber uppercase tracking-wider mb-1">Cover Letter</span>
+                                      <ExpandableText text={applicant.freelancerCoverLetter} maxLength={150} />
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+
+                      {freelancer && gig.status !== 'open' && (
                         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 bg-background border border-border rounded-2xl w-full xl:max-w-2xl">
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-full bg-brand-amber/10 flex items-center justify-center border border-brand-amber/20 shrink-0">
                               <User className="w-5 h-5 text-brand-amber" />
                             </div>
                             <div className="flex flex-col">
-                              <span className="text-[10px] font-bold text-text-secondary uppercase tracking-wider">Assigned Freelancer</span>
+                              <span className="text-[10px] font-bold text-text-secondary uppercase tracking-wider">
+                                {gig.status === 'pending_approval' ? 'Selected Applicant' : 'Assigned Freelancer'}
+                              </span>
                               <span className="text-sm font-bold text-text-primary">{freelancer.name}</span>
                               <span className="text-xs text-text-muted font-mono truncate max-w-[150px] sm:max-w-xs">{freelancer.walletAddress}</span>
                             </div>
@@ -581,7 +655,7 @@ export default function ClientGigsPage() {
                           </div>
                         </div>
                       )}
-                      {freelancer && gig.freelancerCoverLetter && (
+                      {freelancer && gig.status !== 'open' && gig.freelancerCoverLetter && (
                         <div className="flex items-start gap-3 p-4 bg-brand-amber/5 border border-brand-amber/20 rounded-2xl w-full xl:max-w-2xl">
                           <div className="w-8 h-8 rounded-full bg-brand-amber/10 flex items-center justify-center border border-brand-amber/20 shrink-0 mt-0.5">
                             <FileText className="w-4 h-4 text-brand-amber" />
@@ -629,7 +703,7 @@ export default function ClientGigsPage() {
                       )}
                       {gig.status === 'pending_approval' && (
                         <button onClick={() => handleFundEscrow(gig)} className="flex items-center justify-center gap-2 px-8 py-4 bg-brand-amber hover:bg-brand-amber/80 text-black text-sm font-extrabold rounded-2xl transition-all shadow-[0_0_20px_rgba(245,165,36,0.3)] hover:shadow-[0_0_25px_rgba(245,165,36,0.5)] w-full xl:w-auto hover:-translate-y-0.5">
-                          Approve Applicant & Fund Escrow <ChevronRight className="w-4 h-4" />
+                          Deploy & Fund Escrow <ChevronRight className="w-4 h-4" />
                         </button>
                       )}
                       {gig.status === 'in_progress' && (

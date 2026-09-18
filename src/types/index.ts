@@ -28,6 +28,13 @@ export interface IGig {
   submissionFileUrl?: string;
   submissionLink?: string;
   freelancerCoverLetter?: string;
+  applicants?: {
+    freelancerId: string | IUser;
+    freelancerResumeUrl?: string;
+    freelancerGithub?: string;
+    freelancerCoverLetter?: string;
+    createdAt?: string;
+  }[];
   createdAt?: string;
   updatedAt?: string;
 }

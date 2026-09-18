@@ -29,11 +29,25 @@ export async function POST(
     const body = await req.json().catch(() => ({}));
     const { freelancerResumeUrl, freelancerGithub, freelancerCoverLetter } = body;
 
-    gig.freelancerId = session.user.id;
-    gig.freelancerResumeUrl = freelancerResumeUrl || null;
-    gig.freelancerGithub = freelancerGithub || null;
-    gig.freelancerCoverLetter = freelancerCoverLetter || null;
-    gig.status = 'pending_approval';
+    // Initialize applicants array if it doesn't exist
+    if (!gig.applicants) {
+      gig.applicants = [];
+    }
+
+    // Check if user has already applied
+    const hasApplied = gig.applicants.some((a: any) => a.freelancerId.toString() === session.user.id);
+    if (hasApplied) {
+      return NextResponse.json({ message: 'You have already applied for this gig.' }, { status: 400 });
+    }
+
+    gig.applicants.push({
+      freelancerId: session.user.id,
+      freelancerResumeUrl: freelancerResumeUrl || null,
+      freelancerGithub: freelancerGithub || null,
+      freelancerCoverLetter: freelancerCoverLetter || null,
+      createdAt: new Date()
+    });
+
     await gig.save();
 
     return NextResponse.json({ message: 'Successfully applied to gig', gig }, { status: 200 });

@@ -19,6 +19,15 @@ const GigSchema = new mongoose.Schema({
   freelancerGithub: { type: String, default: null },
   freelancerCoverLetter: { type: String, default: null },
   
+  // List of all applicants for the gig
+  applicants: [{
+    freelancerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    freelancerResumeUrl: { type: String, default: null },
+    freelancerGithub: { type: String, default: null },
+    freelancerCoverLetter: { type: String, default: null },
+    createdAt: { type: Date, default: Date.now }
+  }],
+  
   // Submission details
   submissionDescription: { type: String, default: null },
   submissionFileUrl: { type: String, default: null },

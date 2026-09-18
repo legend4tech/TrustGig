@@ -18,7 +18,8 @@ export async function GET() {
     if (role === 'client') {
       gigs = await Gig.find({ clientId: session.user.id })
         .sort({ createdAt: -1 })
-        .populate('freelancerId', 'name walletAddress');
+        .populate('freelancerId', 'name walletAddress')
+        .populate('applicants.freelancerId', 'name walletAddress');
     } else {
       // Freelancer sees open gigs, paid/completed gigs (as proof of activity), or gigs assigned to them
       gigs = await Gig.find({
