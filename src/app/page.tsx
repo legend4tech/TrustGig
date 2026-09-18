@@ -195,40 +195,66 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* The Problem / Solution (Split View) */}
+        {/* The Problem / Solution (Custodial vs Non-Custodial) */}
         <motion.div 
-          id="how-it-works"
+          id="architecture"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mt-32 max-w-6xl w-full px-6 relative z-10 text-left"
+          className="mt-32 max-w-7xl w-full px-6 relative z-10 text-left"
         >
+          <div className="text-center mb-16">
+            <h2 className="text-5xl md:text-6xl font-black mb-4 tracking-tighter">Why We Are <span className="text-red-500">Built Different</span></h2>
+            <p className="text-xl text-text-secondary font-sans max-w-3xl mx-auto">
+              Most platforms use centralized databases or custodial wallets to hold your money. <br/>
+              <strong className="text-white">We deploy independent Soroban Smart Contracts on Stellar.</strong>
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="glass-card p-12 md:p-16 rounded-[3rem] border-t border-t-red-500/20 group hover:border-red-500/40 transition-colors">
-              <div className="w-16 h-16 rounded-[2rem] bg-red-500/10 flex items-center justify-center mb-10 border border-red-500/20">
-                <Activity className="w-8 h-8 text-red-400" />
+            {/* The Custodial Way */}
+            <div className="glass-card p-12 md:p-14 rounded-[3rem] border-t border-t-red-500/20 group hover:border-red-500/40 transition-colors bg-gradient-to-br from-red-500/5 to-transparent">
+              <div className="flex items-center gap-6 mb-10">
+                <div className="w-16 h-16 rounded-[2rem] bg-red-500/10 flex items-center justify-center border border-red-500/20">
+                  <Activity className="w-8 h-8 text-red-400" />
+                </div>
+                <div>
+                  <h3 className="text-3xl font-black text-white tracking-tight">Custodial Escrow</h3>
+                  <p className="text-red-400 font-sans font-bold text-sm uppercase tracking-widest mt-1">The Old Way</p>
+                </div>
               </div>
-              <h3 className="text-4xl font-black mb-6 text-white tracking-tight">The Old Way</h3>
               <ul className="space-y-6 font-sans text-lg text-text-secondary">
-                <li className="flex items-center gap-4"><span className="text-red-400 font-black">✗</span> Up to 20% platform fees stolen from you</li>
-                <li className="flex items-center gap-4"><span className="text-red-400 font-black">✗</span> 14-day hold on cleared funds</li>
-                <li className="flex items-center gap-4"><span className="text-red-400 font-black">✗</span> Centralized arbitrary account bans</li>
-                <li className="flex items-center gap-4"><span className="text-red-400 font-black">✗</span> High risk of client ghosting & non-payment</li>
+                <li className="flex items-start gap-4"><span className="text-red-400 font-black mt-1">✗</span> <div><strong className="text-white">They hold the keys.</strong> Funds sit in a central company wallet.</div></li>
+                <li className="flex items-start gap-4"><span className="text-red-400 font-black mt-1">✗</span> <div><strong className="text-white">Centralized failure.</strong> If their database crashes or they get hacked, your money is gone.</div></li>
+                <li className="flex items-start gap-4"><span className="text-red-400 font-black mt-1">✗</span> <div><strong className="text-white">Opaque ledger.</strong> You just have to "trust" their UI that the money is really there.</div></li>
+                <li className="flex items-start gap-4"><span className="text-red-400 font-black mt-1">✗</span> <div><strong className="text-white">Arbitrary bans.</strong> They can freeze your payout at any time for any reason.</div></li>
               </ul>
             </div>
             
-            <div className="glass-card p-12 md:p-16 rounded-[3rem] border-t neon-border bg-gradient-to-br from-brand-amber/5 to-transparent relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-brand-amber/10 rounded-full filter blur-[80px] -z-10"></div>
-              <div className="w-16 h-16 rounded-[2rem] bg-brand-amber/10 flex items-center justify-center mb-10 border border-brand-amber/20 shadow-[0_0_20px_rgba(245,165,36,0.3)]">
-                <Rocket className="w-8 h-8 text-brand-amber" />
+            {/* The TrustGig Way */}
+            <div className="glass-card p-12 md:p-14 rounded-[3rem] border-t border-t-brand-amber/50 neon-border bg-gradient-to-br from-brand-amber/10 to-transparent relative overflow-hidden transform md:-translate-y-4 shadow-[0_20px_50px_rgba(245,165,36,0.15)]">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-brand-amber/20 rounded-full filter blur-[80px] -z-10"></div>
+              
+              <div className="absolute top-6 right-6 bg-brand-amber/20 text-brand-amber text-xs font-black px-4 py-2 rounded-full uppercase tracking-widest border border-brand-amber/30">
+                True Web3
               </div>
-              <h3 className="text-4xl font-black mb-6 text-white tracking-tight">The TrustGig Way</h3>
-              <ul className="space-y-6 font-sans text-lg text-white font-medium">
-                <li className="flex items-center gap-4"><span className="text-brand-amber font-black text-xl">✓</span> 0% platform fees</li>
-                <li className="flex items-center gap-4"><span className="text-brand-amber font-black text-xl">✓</span> Instant <span className="font-mono text-sm bg-white/10 px-2 py-1 rounded-md mx-1 border border-white/10">&lt;5s</span> settlement on-chain</li>
-                <li className="flex items-center gap-4"><span className="text-brand-amber font-black text-xl">✓</span> Censorship resistant structure</li>
-                <li className="flex items-center gap-4"><span className="text-brand-amber font-black text-xl">✓</span> Cryptographically secured escrows</li>
+
+              <div className="flex items-center gap-6 mb-10">
+                <div className="w-16 h-16 rounded-[2rem] bg-brand-amber/20 flex items-center justify-center border border-brand-amber/30 shadow-[0_0_30px_rgba(245,165,36,0.4)]">
+                  <Rocket className="w-8 h-8 text-brand-amber" />
+                </div>
+                <div>
+                  <h3 className="text-3xl font-black text-white tracking-tight">Non-Custodial Soroban</h3>
+                  <p className="text-brand-amber font-sans font-bold text-sm uppercase tracking-widest mt-1">The TrustGig Way</p>
+                </div>
+              </div>
+              
+              <ul className="space-y-6 font-sans text-lg text-white font-medium relative z-10">
+                <li className="flex items-start gap-4"><span className="text-brand-amber font-black text-xl mt-1">✓</span> <div><strong className="text-brand-amber">No Middlemen.</strong> A new, independent smart contract is deployed on Stellar for <em>every single gig</em>.</div></li>
+                <li className="flex items-start gap-4"><span className="text-brand-amber font-black text-xl mt-1">✓</span> <div><strong className="text-brand-amber">Code is Law.</strong> We literally cannot touch your money. The contract mathematically guarantees the payout.</div></li>
+                <li className="flex items-start gap-4"><span className="text-brand-amber font-black text-xl mt-1">✓</span> <div><strong className="text-brand-amber">100% Verifiable.</strong> Every escrow is verifiable on Stellar Explorer. Don't trust us, trust the math.</div></li>
+                <li className="flex items-start gap-4"><span className="text-brand-amber font-black text-xl mt-1">✓</span> <div><strong className="text-brand-amber">Instant Payouts.</strong> Contract executes in &lt;5s upon approval. Direct to your Pollar wallet.</div></li>
               </ul>
             </div>
           </div>
