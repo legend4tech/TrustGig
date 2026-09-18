@@ -220,8 +220,13 @@ export default function ClientGigsPage() {
         body: JSON.stringify({ freelancerId })
       });
       if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message || 'Failed to approve applicant');
+        const contentType = res.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          const err = await res.json();
+          throw new Error(err.message || 'Failed to approve applicant');
+        } else {
+          throw new Error('Server returned HTML instead of JSON. This usually means the new API route was not picked up. Please restart your Next.js dev server (Ctrl+C then npm run dev).');
+        }
       }
       toast.success('Applicant approved! You can now deploy the escrow.', { id: toastId });
       queryClient.invalidateQueries({ queryKey: ['clientGigs'] });
@@ -582,7 +587,7 @@ export default function ClientGigsPage() {
                             if (!appUser || typeof appUser === 'string') return null;
                             return (
                               <div key={i} className="flex flex-col gap-3 p-4 bg-background border border-border rounded-2xl">
-                                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                                <div className="flex flex-col gap-3">
                                   <div className="flex items-center gap-3">
                                     <div className="w-10 h-10 rounded-full bg-brand-amber/10 flex items-center justify-center border border-brand-amber/20 shrink-0">
                                       <User className="w-5 h-5 text-brand-amber" />
@@ -590,10 +595,10 @@ export default function ClientGigsPage() {
                                     <div className="flex flex-col">
                                       <span className="text-[10px] font-bold text-text-secondary uppercase tracking-wider">Applicant</span>
                                       <span className="text-sm font-bold text-text-primary">{appUser.name}</span>
-                                      <span className="text-xs text-text-muted font-mono truncate max-w-[150px] sm:max-w-xs">{appUser.walletAddress}</span>
+                                      <span className="text-xs text-text-muted font-mono truncate max-w-[180px]">{appUser.walletAddress}</span>
                                     </div>
                                   </div>
-                                  <div className="flex items-center gap-2">
+                                  <div className="flex flex-wrap items-center gap-2">
                                     {applicant.freelancerGithub && (
                                       <a href={applicant.freelancerGithub} target="_blank" rel="noreferrer" className="px-3 py-1.5 bg-surface hover:bg-surface-hover border border-border rounded-xl text-xs font-bold text-text-primary transition-colors whitespace-nowrap flex items-center gap-2">
                                         <Code className="w-3.5 h-3.5" /> GitHub
@@ -606,7 +611,7 @@ export default function ClientGigsPage() {
                                     )}
                                     <button
                                       onClick={() => handleApproveApplicant(gig._id, appUser._id)}
-                                      className="px-4 py-1.5 bg-brand-amber hover:bg-brand-amber/80 text-black text-xs font-extrabold rounded-xl transition-all shadow-[0_0_15px_rgba(245,165,36,0.3)] hover:-translate-y-0.5 whitespace-nowrap ml-2"
+                                      className="px-5 py-1.5 bg-brand-amber hover:bg-brand-amber/80 text-black text-xs font-extrabold rounded-xl transition-all shadow-[0_0_15px_rgba(245,165,36,0.3)] hover:-translate-y-0.5 whitespace-nowrap"
                                     >
                                       Select Applicant
                                     </button>
@@ -696,7 +701,7 @@ export default function ClientGigsPage() {
                     
                     {/* Actions */}
                     <div className="flex items-center gap-3 shrink-0">
-                      {gig.status === 'open' && (
+                      {gig.status === 'open' && (!gig.applicants || gig.applicants.length === 0) && (
                         <button onClick={() => handleEditClick(gig)} className="flex items-center justify-center gap-2 px-8 py-4 bg-surface hover:bg-surface-hover border border-border text-text-primary text-sm font-bold rounded-2xl transition-all shadow-sm w-full xl:w-auto hover:-translate-y-0.5">
                           <Edit2 className="w-4 h-4" /> Edit
                         </button>
